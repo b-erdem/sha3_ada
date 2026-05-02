@@ -1,0 +1,7 @@
+obj/
+lib/
+config/
+alire/
+tests/obj/
+tests/config/
+tests/alire/

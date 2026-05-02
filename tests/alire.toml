@@ -1,0 +1,17 @@
+name = "sha3_ada_tests"
+description = "Internal test crate for sha3_ada (not published)"
+version = "0.0.0"
+
+authors = ["Baris Erdem"]
+maintainers = ["Baris Erdem <baris@erdem.dev>"]
+maintainers-logins = ["b-erdem"]
+licenses = "Apache-2.0"
+
+project-files = ["test_sha3.gpr"]
+
+[[depends-on]]
+sha3_ada = "*"
+gnatprove = "^15.1.0"
+
+[[pins]]
+sha3_ada = { path = ".." }

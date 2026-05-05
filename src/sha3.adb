@@ -83,6 +83,7 @@ package body SHA3 is
          pragma Loop_Invariant (S.Byte_Pos < S.Rate);
          pragma Loop_Invariant (S.Rate < State_Bytes);
          pragma Loop_Invariant (not S.Squeezing);
+         pragma Loop_Variant (Decreases => Data'Last - Pos);
 
          declare
             Want : constant Natural := S.Rate - S.Byte_Pos;
@@ -136,6 +137,7 @@ package body SHA3 is
          pragma Loop_Invariant (S.Byte_Pos < S.Rate);
          pragma Loop_Invariant (S.Rate < State_Bytes);
          pragma Loop_Invariant (S.Squeezing);
+         pragma Loop_Variant (Decreases => Result'Last - Pos);
 
          declare
             Available : constant Natural := S.Rate - S.Byte_Pos;

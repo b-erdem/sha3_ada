@@ -37,34 +37,40 @@ package SHA3 is
    end record;
 
    procedure SHA3_256 (Data : Byte_Array; Result : out Byte_Array_32)
-     with Pre => Data'First >= 0
+     with Always_Terminates => True,
+          Pre => Data'First >= 0
                  and then Data'Last < Natural'Last;
 
    procedure SHA3_512 (Data : Byte_Array; Result : out Byte_Array_64)
-     with Pre => Data'First >= 0
+     with Always_Terminates => True,
+          Pre => Data'First >= 0
                  and then Data'Last < Natural'Last;
 
    procedure SHAKE128 (Data : Byte_Array; Result : out Byte_Array)
-     with Pre => Result'First >= 0
+     with Always_Terminates => True,
+          Pre => Result'First >= 0
                  and then Result'Last < Natural'Last
                  and then Data'First >= 0
                  and then Data'Last < Natural'Last;
 
    procedure SHAKE256 (Data : Byte_Array; Result : out Byte_Array)
-     with Pre => Result'First >= 0
+     with Always_Terminates => True,
+          Pre => Result'First >= 0
                  and then Result'Last < Natural'Last
                  and then Data'First >= 0
                  and then Data'Last < Natural'Last;
 
    procedure Init (S : out Sponge_State; Rate : Sponge_Rate; Domain : U8)
-     with Post => S.Rate = Rate
+     with Always_Terminates => True,
+          Post => S.Rate = Rate
                   and then S.Domain = Domain
                   and then S.Byte_Pos = 0
                   and then not S.Squeezing
                   and then (for all I in 0 .. 24 => S.State (I) = 0);
 
    procedure Absorb (S : in out Sponge_State; Data : Byte_Array)
-     with Pre => not S.Squeezing
+     with Always_Terminates => True,
+          Pre => not S.Squeezing
                  and then S.Byte_Pos < S.Rate
                  and then S.Rate < State_Bytes
                  and then Data'First >= 0
@@ -76,7 +82,8 @@ package SHA3 is
                   and then S.Domain = S.Domain'Old;
 
    procedure Squeeze (S : in out Sponge_State; Result : out Byte_Array)
-     with Pre => Result'First >= 0
+     with Always_Terminates => True,
+          Pre => Result'First >= 0
                  and then Result'Last < Natural'Last
                  and then S.Byte_Pos < S.Rate
                  and then S.Rate < State_Bytes,

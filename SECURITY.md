@@ -56,11 +56,18 @@ The mean of 4.74 µs differed by 0.03 % between classes; well within
 measurement noise. Re-run on your target platform with
 `alr build && bin/ct_sha3 100000`.
 
+**Cache-CT (data-dependent memory access)**: audited statically. See
+[CT_AUDIT.md](CT_AUDIT.md). Every array index in the public API and
+internal Keccak permutation is either a constant or a loop counter;
+no access is indexed by a secret-data-derived value. The lookup
+tables (`RC`, `Rho_Pi_*`, `Chi_*`) total 200 bytes and are accessed
+in a fixed sweep, fitting in L1 cache after the first round.
+**Verdict**: cache-CT by structure.
+
+Empirical cache-trace verification with cachegrind (Linux-only) is
+deferred to a Linux CI step in v0.2; macOS has no equivalent tool.
+
 **Out of scope:**
-- Cache-based side channels (data-dependent memory access patterns).
-  All access patterns are constant by structure (Keccak round constants
-  and ρ-π tables are indexed by the loop counter), so cache-CT is
-  expected to hold but has not been measured.
 - Hardware side channels (power, EM).
 
 #### FIPS 140-3

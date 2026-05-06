@@ -12,7 +12,7 @@ days for high-severity issues.
 
 | Version | Supported |
 |---|---|
-| 0.1.x | ✅ |
+| 1.x | ✅ |
 
 ## Threat Model
 
@@ -21,7 +21,7 @@ days for high-severity issues.
 inside keyed protocols (e.g., HMAC-SHA-3, ML-KEM XOF) where its inputs are
 derived from secret material.
 
-### What SPARK proves (level 1)
+### What SPARK proves (level 2)
 
 All 147 proof obligations are discharged, guaranteeing **absence of**:
 

@@ -5,7 +5,7 @@ implementation for Ada 2022, formally verified with
 [SPARK](https://www.adacore.com/about-spark).
 
 The Keccak-f[1600] permutation, sponge construction, and public API are
-**100% SPARK-proved at level 1** — mathematically guaranteed free of runtime
+**100% SPARK-proved at level 2** — mathematically guaranteed free of runtime
 errors (no buffer overflows, no range violations, no integer overflows, no
 uninitialized reads, no non-terminating loops).
 
@@ -24,10 +24,10 @@ uninitialized reads, no non-terminating loops).
 
 | Property | Status |
 |---|---|
-| Type safety (overflow, range, bounds) | ✅ Proved (SPARK level 1, 147/147 VCs) |
+| Type safety (overflow, range, bounds) | ✅ Proved (SPARK level 2, 147/147 VCs) |
 | Termination | ✅ Proved (`Always_Terminates`) |
-| Functional correctness vs FIPS 202 | ✅ Tested against NIST KAT |
-| Constant-time execution | ❌ Not empirically verified — see [SECURITY.md](SECURITY.md) |
+| Functional correctness vs FIPS 202 | ✅ Tested against NIST KAT + bundled CAVP subset |
+| Constant-time execution | ✅ Empirically verified (`SHA3_256`, Welch *t* = -1.20, cache-CT byte-identical) |
 | FIPS 140-3 validated | ❌ Not validated |
 
 ## Installation
@@ -40,7 +40,7 @@ Or pin to this repository:
 
 ```toml
 [[depends-on]]
-sha3_ada = "~0.1"
+sha3_ada = "~1.0"
 
 [[pins]]
 sha3_ada = { url = "https://github.com/b-erdem/sha3_ada" }

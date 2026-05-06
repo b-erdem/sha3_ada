@@ -5,6 +5,37 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.0] - 2026-05-06
+
+First stable release. The public API contract is now stable; future
+1.x releases will preserve backward compatibility per SemVer.
+
+This release rolls up the v0.2.0 and v0.3.0-pre entries below into
+the 1.0 stability commitment. Net additions vs. v0.1.0:
+
+- `gnatprove --level=2` in CI (147/147 obligations discharged at
+  level 2; v0.1.0 documented level 1 only).
+- `SHA3.Wipe` zeroisation helpers (`Wipe_Sponge_State`,
+  `Wipe_Byte_Array`) with `Inline => False` bodies so the optimiser
+  cannot prove the writes dead at -O2 without LTO.
+- NIST CAVP cross-validation: a hand-curated CAVS-format vector
+  subset under `cavp/vectors/` runs in CI, plus an opt-in fetch of
+  the full NIST archive.
+- `-fstack-usage` GPR switch + `scripts/stack_summary.sh`. Worst-
+  case stack ~640 B (one-shot API → Permute), documented in
+  SECURITY.md.
+
+### Breaking changes from v0.1.0
+
+None. The streaming `Init / Absorb / Squeeze` and one-shot
+`SHA3_256 / SHA3_512 / SHAKE128 / SHAKE256` APIs are byte-identical
+to v0.1.0.
+
+### Verified
+- **147/147 SPARK level=2 obligations** discharged, zero
+  `pragma Assume`, zero unproved VCs.
+- 35 unit tests + the bundled CAVP subset pass in CI.
+
 ## [0.3.0-pre] - 2026-05-06
 
 ### Added

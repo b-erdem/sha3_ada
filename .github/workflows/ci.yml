@@ -32,7 +32,7 @@ jobs:
           ./bin/test_sha3
 
   prove:
-    name: SPARK proof (level 1)
+    name: SPARK proof (level 2)
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -46,4 +46,4 @@ jobs:
         run: alr -n toolchain --select gnat_native gprbuild gnatprove
 
       - name: Run gnatprove
-        run: alr -n exec -- gnatprove -P sha3_ada.gpr --level=1 --no-axiom-guard --report=fail
+        run: alr -n exec -- gnatprove -P sha3_ada.gpr --level=2 --report=fail

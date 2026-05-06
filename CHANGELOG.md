@@ -5,6 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.0] - 2026-05-06
+
+### Added
+
+- **`SHA3.Wipe`** — caller-facing zeroisation helpers
+  (`Wipe_Sponge_State`, `Wipe_Byte_Array`). Bodies in a separate
+  compilation unit with `Inline => False` so the optimizer cannot
+  prove the writes dead at -O2 without LTO. Used by ML-KEM and
+  SLH-DSA to clear absorbed-secret-seed bytes before scope end.
+- **`cavp/cavp_runner`** — NIST CAVP `.rsp` cross-validation harness
+  parsing the standard CAVS-format vector files (ShortMsg, LongMsg,
+  VariableOut) for sha3_256 / sha3_512 / shake128 / shake256.
+  Smoke-tested against the published empty-message and "abc"
+  reference values; the README documents the full CAVP corpus
+  fetch.
+- **CI workflow** running build + tests + `gnatprove --level=2` on
+  every push/PR.
+- **`-fstack-usage`** GPR switch + `scripts/stack_summary.sh`. Stack
+  budget now documented in SECURITY.md (worst-case ~640 B).
+
+### Changed
+
+- SECURITY.md: documents the `Wipe` helpers and the LTO caveat
+  for memory-erasure callers.
+
 ## [0.1.0] - 2026-05-06
 
 Initial release.

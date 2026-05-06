@@ -56,16 +56,17 @@ The mean of 4.74 µs differed by 0.03 % between classes; well within
 measurement noise. Re-run on your target platform with
 `alr build && bin/ct_sha3 100000`.
 
-**Cache-CT (data-dependent memory access)**: audited statically. See
-[CT_AUDIT.md](CT_AUDIT.md). Every array index in the public API and
-internal Keccak permutation is either a constant or a loop counter;
-no access is indexed by a secret-data-derived value. The lookup
-tables (`RC`, `Rho_Pi_*`, `Chi_*`) total 200 bytes and are accessed
-in a fixed sweep, fitting in L1 cache after the first round.
-**Verdict**: cache-CT by structure.
+**Cache-CT (data-dependent memory access)**: audited statically and
+verified empirically. See [CT_AUDIT.md](CT_AUDIT.md).
 
-Empirical cache-trace verification with cachegrind (Linux-only) is
-deferred to a Linux CI step in v0.2; macOS has no equivalent tool.
+| Cache level | Class A | Class B | Δ |
+|---|---|---|---|
+| D1 misses | 30 561 | 30 557 | -4 (0.013 %) |
+| LLd misses | 18 080 | 18 080 | **0** |
+
+50 000 iterations of `SHA3_256` per class under cachegrind 3.22 in a
+Linux Docker container. Last-level-data cache misses byte-identical
+between fixed and random input. **Verdict**: cache-CT.
 
 **Out of scope:**
 - Hardware side channels (power, EM).

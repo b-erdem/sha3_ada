@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0-pre] - 2026-05-06
+
+### Added
+
+- **NIST CAVP corpus integration in CI**: `cavp/vectors/` ships a
+  hand-curated subset of CAVS-format ShortMsg test vectors for
+  SHA3-256, SHA3-512, SHAKE128, SHAKE256 (verified against the
+  FIPS 202 reference values). The CI workflow's new `cavp` job runs
+  the bundled subset on every push/PR, then optionally fetches the
+  full upstream NIST archive (~2 MB) and exercises the full
+  ShortMsg corpus; upstream failure is non-fatal.
+
+The bundled subset doubles as a regression check that the
+implementation matches FIPS 202 outputs end-to-end, complementing
+the round-trip tests in `test_sha3.adb` (which only exercise
+internal consistency).
+
 ## [0.2.0] - 2026-05-06
 
 ### Added

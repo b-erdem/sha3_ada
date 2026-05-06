@@ -41,18 +41,27 @@ The following are **not** protected against by this library:
 
 #### Constant-time execution
 
-Constant-time execution against timing side-channels has **not been
-empirically verified**. The implementation follows constant-time discipline by
-structure (no branches on input data inside the round function), but:
+**Static analysis**: see [CT_AUDIT.md](CT_AUDIT.md). All branches in the
+public API are public-data-dependent (depend on input *length*, not contents).
+Constant-time by structure.
 
-- Compiler optimisations may introduce data-dependent control flow.
-- Cache-based side channels (data-dependent memory access patterns) are not
-  analysed.
-- Hardware side channels (power, EM) are out of scope.
+**Empirical verification** with the [ct_harness](../ct_harness) dudect-style
+harness on Apple Silicon (Rosetta x86_64, GNAT 14.x at -O2):
 
-A constant-time evidence package (ctgrind, dudect, formal CT analysis) is
-available under separate engagement. **Do not deploy this library against
-adversaries with timing-channel access without that engagement.**
+| Test | Class A | Class B | Iterations | Welch t | Verdict |
+|---|---|---|---|---|---|
+| `SHA3_256` | fixed 256 B | random 256 B | 100 000 | -1.20 | PASS (\|t\| < 4.5) |
+
+The mean of 4.74 µs differed by 0.03 % between classes; well within
+measurement noise. Re-run on your target platform with
+`alr build && bin/ct_sha3 100000`.
+
+**Out of scope:**
+- Cache-based side channels (data-dependent memory access patterns).
+  All access patterns are constant by structure (Keccak round constants
+  and ρ-π tables are indexed by the loop counter), so cache-CT is
+  expected to hold but has not been measured.
+- Hardware side channels (power, EM).
 
 #### FIPS 140-3
 

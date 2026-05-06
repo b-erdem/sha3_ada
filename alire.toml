@@ -12,10 +12,16 @@ tags = ["sha3", "keccak", "hash", "cryptography", "spark", "embedded", "security
 long-description = """
 SPARK-proved SHA-3 and SHAKE implementations for Ada 2022. Implements FIPS 202
 with SHA3-256, SHA3-512, SHAKE128, and SHAKE256. Keccak-f[1600] permutation
-and sponge construction are formally verified at SPARK Level 2. No heap
-allocation, pragma Pure, suitable for embedded and safety-critical systems.
-Incremental API (init/absorb/squeeze) and one-shot convenience functions.
-Tested against NIST Known Answer Test vectors.
+and sponge construction are formally verified at SPARK level 1: 147/147 proof
+obligations discharged, zero pragma Assume, zero unproved VCs, termination
+verified via Always_Terminates aspects on every public subprogram.
+
+No heap allocation, pragma Pure, suitable for embedded and safety-critical
+systems. Incremental API (Init/Absorb/Squeeze) and one-shot convenience
+functions. Tested against NIST Known Answer Test vectors.
+
+Constant-time execution and FIPS 140-3 validation are out of scope for this
+release. See SECURITY.md for the full threat model.
 """
 
 project-files = ["sha3_ada.gpr"]

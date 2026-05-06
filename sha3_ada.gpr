@@ -12,7 +12,11 @@ library project SHA3_Ada is
         ("-g", "-O2", "-gnatwa", "-gnatW8", "-gnatyM120",
          "-gnat2022",
          "-gnato",
-         "-gnatVa");
+         "-gnatVa",
+         --  Emit per-function .su stack-usage notes alongside .o
+         --  files. Cost-free at -O2 and gives downstream users a
+         --  static stack bound for safety-critical sizing.
+         "-fstack-usage");
    end Compiler;
 
 end SHA3_Ada;

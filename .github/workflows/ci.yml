@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  build-test:
+    name: Build + test (Linux x86_64)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Alire
+        uses: alire-project/setup-alire@v4
+        with:
+          version: '2.1.0'
+
+      - name: Build library
+        run: alr -n build
+
+      - name: Build and run tests
+        working-directory: tests
+        run: |
+          alr -n exec -- gprbuild -P test_sha3.gpr
+          ./bin/test_sha3
+
+  prove:
+    name: SPARK proof (level 1)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Alire
+        uses: alire-project/setup-alire@v4
+        with:
+          version: '2.1.0'
+
+      - name: Install gnatprove
+        run: alr -n toolchain --select gnat_native gprbuild gnatprove
+
+      - name: Run gnatprove
+        run: alr -n exec -- gnatprove -P sha3_ada.gpr --level=1 --no-axiom-guard --report=fail

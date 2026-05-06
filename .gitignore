@@ -5,3 +5,7 @@ alire/
 tests/obj/
 tests/config/
 tests/alire/
+cavp/obj/
+cavp/bin/
+cavp/config/
+cavp/alire/

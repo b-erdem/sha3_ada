@@ -85,18 +85,38 @@ The library does not enforce protocol-level invariants:
 - Calling `Absorb` after `Squeeze` is rejected by precondition (would fail
   in proof at the call site or at runtime if assertions enabled), but it is
   the caller's responsibility to respect the absorb-then-squeeze ordering.
-- The library does not zeroise sponge state on destruction. If your threat
-  model requires post-use erasure of intermediate state, do it explicitly.
+- The library does not zeroise sponge state on destruction *automatically*,
+  but `SHA3.Wipe.Wipe_Sponge_State` and `SHA3.Wipe.Wipe_Byte_Array` are
+  available for callers who need post-use erasure. Both procedures live in
+  a separate compilation unit with `Inline => False`, so the optimizer
+  cannot prove the writes dead at -O2 without LTO. Builds using LTO must
+  pair with `-fno-builtin-memset` or call `explicit_bzero(3)`.
 
 ### Runtime hardening
 
 The library GPR enables:
 - `-gnato` — overflow checks (defense-in-depth beyond SPARK proofs)
 - `-gnatVa` — validity checks on all parameters
+- `-fstack-usage` — emits per-function `.su` files (no runtime cost)
+  for use with `scripts/stack_summary.sh`.
 
 Internal SPARK contracts (`Pre`/`Post`) are **proof-only** and not checked at
 runtime. Enable `-gnata` in your application's GPR to enforce public API
 preconditions at runtime.
+
+### Stack budget
+
+Per-function frame sizes (GNAT 15.2, x86_64 macOS, `-O2`):
+
+| Function | Frame | Notes |
+|---|---:|---|
+| Permute   | 384 | Keccak-f[1600] permutation, deepest leaf |
+| SHAKE128/256, SHA3_256/512 | 256 | one-shot APIs |
+| Squeeze   |  96 |                                        |
+| Absorb    |  48 |                                        |
+
+Worst-case call chain: any one-shot API → Permute ≈ **640 B**. Run
+`scripts/stack_summary.sh .` after `alr build` to regenerate the table.
 
 ## Known limitations
 

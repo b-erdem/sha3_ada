@@ -1,0 +1,12 @@
+# Hand-curated subset of NIST CAVP SHAKE128 short-message vectors.
+# All Output values are 32 bytes (256 bits) of squeezed output.
+
+[L = 256]
+
+Len = 0
+Msg = 00
+Output = 7f9c2ba4e88f827d616045507605853ed73b8093f6efbc88eb1a6eacfa66ef26
+
+Len = 24
+Msg = 616263
+Output = 5881092dd818bf5cf8a3ddb793fbcba74097d5c526a6d35f97b83351940f2cc8

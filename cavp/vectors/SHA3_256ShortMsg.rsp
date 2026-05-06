@@ -1,0 +1,19 @@
+# Hand-curated subset of NIST CAVP SHA3_256ShortMsg vectors. Regenerate
+# the full corpus from
+# https://csrc.nist.gov/CSRC/media/Projects/Cryptographic-Algorithm-
+# Validation-Program/documents/sha3/sha-3bytetestvectors.zip
+# and drop in the upstream rsp files for full coverage.
+
+[L = 256]
+
+Len = 0
+Msg = 00
+MD = a7ffc6f8bf1ed76651c14756a061d662f580ff4de43b49fa82d80a4b80f8434a
+
+Len = 8
+Msg = e9
+MD = f0d04dd1e6cfc29a4460d521796852f25d9ef8d28b44ee91ff5b759d72c1e6d6
+
+Len = 24
+Msg = 616263
+MD = 3a985da74fe225b2045c172d6bd390bd855f086e3e9d525b46bfe24511431532

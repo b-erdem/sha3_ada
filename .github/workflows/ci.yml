@@ -47,3 +47,49 @@ jobs:
 
       - name: Run gnatprove
         run: alr -n exec -- gnatprove -P sha3_ada.gpr --level=2 --report=fail
+
+  cavp:
+    name: NIST CAVP cross-validation
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Alire
+        uses: alire-project/setup-alire@v4
+        with:
+          version: '2.1.0'
+
+      - name: Build CAVP runner
+        working-directory: cavp
+        run: alr -n exec -- gprbuild -P cavp_runner.gpr
+
+      - name: Run CAVP vectors (bundled subset)
+        working-directory: cavp
+        run: |
+          set -e
+          ./bin/cavp_runner sha3_256 vectors/SHA3_256ShortMsg.rsp
+          ./bin/cavp_runner sha3_512 vectors/SHA3_512ShortMsg.rsp
+          ./bin/cavp_runner shake128 vectors/SHAKE128_ShortMsg.rsp
+          ./bin/cavp_runner shake256 vectors/SHAKE256_ShortMsg.rsp
+
+      - name: Run CAVP vectors (full upstream corpus, optional)
+        working-directory: cavp
+        run: |
+          # The full NIST CAVS corpus is ~2 MB and changes shape over time;
+          # see cavp/README.md for the canonical fetch URL. Skip silently
+          # if the upstream archive isn't reachable from a CI runner.
+          set -e
+          if curl -sSfo /tmp/sha3.zip \
+               "https://csrc.nist.gov/CSRC/media/Projects/Cryptographic-Algorithm-Validation-Program/documents/sha3/sha-3bytetestvectors.zip" \
+             2>/dev/null; then
+              mkdir -p /tmp/cavp_full
+              unzip -q /tmp/sha3.zip -d /tmp/cavp_full
+              for f in /tmp/cavp_full/*SHA3_256*ShortMsg.rsp; do
+                  ./bin/cavp_runner sha3_256 "$f"
+              done
+              for f in /tmp/cavp_full/*SHA3_512*ShortMsg.rsp; do
+                  ./bin/cavp_runner sha3_512 "$f"
+              done
+          else
+              echo "Upstream CAVP archive unreachable -- skipped."
+          fi

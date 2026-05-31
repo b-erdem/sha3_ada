@@ -1,0 +1,8 @@
+# Governance manifest — see ../CONSTITUTION.md and
+# ../docs/governance/exceptions-policy.md
+name    = "sha3_ada"
+profile = "proved-crypto"
+published = true
+gpr     = "sha3_ada.gpr"
+claimed_proof_level = 2
+claimed_vcs = 159

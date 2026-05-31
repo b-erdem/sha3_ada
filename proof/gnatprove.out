@@ -1,0 +1,54 @@
+=========================
+Summary of SPARK analysis
+=========================
+
+-------------------------------------------------------------------------------------------------
+SPARK Analysis results        Total        Flow                    Provers   Justified   Unproved
+-------------------------------------------------------------------------------------------------
+Data Dependencies                 .           .                          .           .          .
+Flow Dependencies                 .           .                          .           .          .
+Initialization                   11          11                          .           .          .
+Non-Aliasing                      .           .                          .           .          .
+Run-time Checks                  63           .    63 (Trivial 1%, Z3 99%)           .          .
+Assertions                       53           .                    53 (Z3)           .          .
+Functional Contracts             19           .                    19 (Z3)           .          .
+LSP Verification                  .           .                          .           .          .
+Termination                      13          11                     2 (Z3)           .          .
+Concurrency                       .           .                          .           .          .
+-------------------------------------------------------------------------------------------------
+Total                           159    22 (14%)                  137 (86%)           .          .
+
+
+max steps used for successful proof: 12256
+
+============================
+Most difficult proved checks
+============================
+
+No check found with max time greater than 1 second
+
+========================
+Detailed analysis report
+========================
+
+Analyzed 3 units
+in unit sha3, 11 subprograms and packages out of 11 analyzed
+  SHA3 at sha3.ads:3 flow analyzed (0 errors, 0 checks, 0 warnings and 0 pragma Assume statements) and proved (0 checks)
+  SHA3.Absorb at sha3.ads:71 flow analyzed (0 errors, 0 checks, 0 warnings and 0 pragma Assume statements) and proved (31 checks)
+  SHA3.Extract_From_State at sha3.adb:43 flow analyzed (0 errors, 0 checks, 0 warnings and 0 pragma Assume statements) and proved (14 checks)
+  SHA3.Init at sha3.ads:63 flow analyzed (0 errors, 0 checks, 0 warnings and 0 pragma Assume statements) and proved (1 checks)
+  SHA3.SHA3_256 at sha3.ads:39 flow analyzed (0 errors, 0 checks, 0 warnings and 0 pragma Assume statements) and proved (3 checks)
+  SHA3.SHA3_512 at sha3.ads:44 flow analyzed (0 errors, 0 checks, 0 warnings and 0 pragma Assume statements) and proved (3 checks)
+  SHA3.SHAKE128 at sha3.ads:49 flow analyzed (0 errors, 0 checks, 0 warnings and 0 pragma Assume statements) and proved (3 checks)
+  SHA3.SHAKE256 at sha3.ads:56 flow analyzed (0 errors, 0 checks, 0 warnings and 0 pragma Assume statements) and proved (3 checks)
+  SHA3.Squeeze at sha3.ads:84 flow analyzed (0 errors, 0 checks, 0 warnings and 0 pragma Assume statements) and proved (39 checks)
+  SHA3.XOR_Byte_Into_State at sha3.adb:7 flow analyzed (0 errors, 0 checks, 0 warnings and 0 pragma Assume statements) and proved (6 checks)
+  SHA3.XOR_Into_State at sha3.adb:19 flow analyzed (0 errors, 0 checks, 0 warnings and 0 pragma Assume statements) and proved (14 checks)
+in unit sha3-keccak, 3 subprograms and packages out of 3 analyzed
+  SHA3.Keccak at sha3-keccak.ads:1 flow analyzed (0 errors, 0 checks, 0 warnings and 0 pragma Assume statements) and proved (0 checks)
+  SHA3.Keccak.Permute at sha3-keccak.ads:6 flow analyzed (0 errors, 0 checks, 0 warnings and 0 pragma Assume statements) and proved (9 checks)
+  SHA3.Keccak.Rotate_Left_64 at sha3-keccak.adb:7 flow analyzed (0 errors, 0 checks, 0 warnings and 0 pragma Assume statements) and proved (1 checks)
+in unit sha3-wipe, 3 subprograms and packages out of 3 analyzed
+  SHA3.Wipe at sha3-wipe.ads:14 flow analyzed (0 errors, 0 checks, 0 warnings and 0 pragma Assume statements) and proved (0 checks)
+  SHA3.Wipe.Wipe_Byte_Array at sha3-wipe.ads:26 flow analyzed (0 errors, 0 checks, 0 warnings and 0 pragma Assume statements) and proved (6 checks)
+  SHA3.Wipe.Wipe_Sponge_State at sha3-wipe.ads:19 flow analyzed (0 errors, 0 checks, 0 warnings and 0 pragma Assume statements) and proved (4 checks)

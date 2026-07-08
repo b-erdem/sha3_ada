@@ -29,5 +29,3 @@ project-files = ["sha3_ada.gpr"]
 [[depends-on]]
 gnat = ">=14.2.1"
 
-[[depends-on]]
-gnatprove = "^15.1.0"

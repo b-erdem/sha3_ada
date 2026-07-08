@@ -13,7 +13,7 @@ uninitialized reads, no non-terminating loops).
 
 ## Key properties
 
-- **Formally verified** — 147 proof obligations, 0 unproved, 0 `pragma Assume`
+- **Formally verified** — 159 proof obligations, 0 unproved, 0 `pragma Assume`
 - **FIPS 202 algorithms** — SHA3-256, SHA3-512, SHAKE128, SHAKE256
 - **Both APIs** — one-shot (`SHA3_256`, `SHA3_512`, `SHAKE128`, `SHAKE256`) and
   incremental (`Init` / `Absorb` / `Squeeze`)
@@ -26,7 +26,7 @@ uninitialized reads, no non-terminating loops).
 
 | Property | Status |
 |---|---|
-| Type safety (overflow, range, bounds) | ✅ Proved (SPARK level 2, 147/147 VCs) |
+| Type safety (overflow, range, bounds) | ✅ Proved (SPARK level 2, 159/159 VCs) |
 | Termination | ✅ Proved (`Always_Terminates`) |
 | Functional correctness vs FIPS 202 | ✅ Tested against NIST KAT + bundled CAVP subset |
 | Constant-time execution | ✅ Empirically verified (`SHA3_256`, Welch *t* = -1.20, cache-CT byte-identical) |
@@ -92,7 +92,7 @@ cd tests && alr build && ./bin/test_sha3
 alr exec -- gnatprove -P sha3_ada.gpr -j0 --level=1
 ```
 
-Expected: 147/147 checks proved, 0 unproved, ≤1 second per check.
+Expected: 159/159 checks proved, 0 unproved, ≤1 second per check.
 
 ## License
 

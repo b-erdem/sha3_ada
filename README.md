@@ -1,5 +1,7 @@
 # sha3_ada
 
+[![CI](https://github.com/b-erdem/sha3_ada/actions/workflows/ci.yml/badge.svg)](https://github.com/b-erdem/sha3_ada/actions/workflows/ci.yml) [![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE) [![SPARK: 159/159 proved](https://img.shields.io/badge/SPARK%20proof-159%2F159%20VCs-brightgreen.svg)](TOOL_QUALIFICATION.md)
+
 A SHA-3 / SHAKE ([FIPS 202](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.202.pdf))
 implementation for Ada 2022, formally verified with
 [SPARK](https://www.adacore.com/about-spark).

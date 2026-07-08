@@ -43,7 +43,9 @@ jobs:
           version: '2.1.0'
 
       - name: Install gnatprove
-        run: alr -n toolchain --select gnat_native gprbuild gnatprove
+        run: |
+          alr -n toolchain --select gnat_native gprbuild
+          alr -n with gnatprove^15.1.0
 
       - name: Run gnatprove
         run: alr -n exec -- gnatprove -P sha3_ada.gpr --level=2 --report=fail
@@ -79,6 +81,7 @@ jobs:
           # see cavp/README.md for the canonical fetch URL. Skip silently
           # if the upstream archive isn't reachable from a CI runner.
           set -e
+          shopt -s nullglob
           if curl -sSfo /tmp/sha3.zip \
                "https://csrc.nist.gov/CSRC/media/Projects/Cryptographic-Algorithm-Validation-Program/documents/sha3/sha-3bytetestvectors.zip" \
              2>/dev/null; then

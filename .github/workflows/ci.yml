@@ -45,7 +45,9 @@ jobs:
       - name: Install gnatprove
         run: |
           alr -n toolchain --select gnat_native gprbuild
-          alr -n with gnatprove^15.1.0
+          # Most crates already declare gnatprove in depends-on; only
+          # add it when absent (alr errors on duplicate dependencies).
+          grep -q '^gnatprove' alire.toml || alr -n with gnatprove^15.1.0
 
       - name: Run gnatprove
         run: alr -n exec -- gnatprove -P sha3_ada.gpr --level=2 --report=fail

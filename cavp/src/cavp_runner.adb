@@ -147,7 +147,15 @@ procedure Cavp_Runner is
       Open (F, In_File, Path);
       while not End_Of_File (F) loop
          declare
-            Line  : constant String := Get_Line (F);
+            Raw   : constant String := Get_Line (F);
+            --  Upstream NIST archives ship CRLF line endings; Get_Line
+            --  strips the LF but leaves the CR, which would poison
+            --  Natural'Value and hex decoding. Strip it here.
+            Line  : constant String :=
+              (if Raw'Length > 0
+                 and then Raw (Raw'Last) = ASCII.CR
+               then Raw (Raw'First .. Raw'Last - 1)
+               else Raw);
             Key   : Unbounded_String;
             Value : Unbounded_String;
          begin

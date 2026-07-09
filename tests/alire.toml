@@ -10,8 +10,8 @@ licenses = "Apache-2.0"
 project-files = ["test_sha3.gpr"]
 
 [[depends-on]]
-sha3_ada = "*"
+sha3 = "*"
 gnatprove = "^15.1.0"
 
 [[pins]]
-sha3_ada = { path = ".." }
+sha3 = { path = ".." }

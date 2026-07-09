@@ -1,4 +1,4 @@
-name = "sha3_ada"
+name = "sha3"
 description = "SPARK-proved SHA-3/SHAKE (FIPS 202) hash functions"
 version = "1.0.0"
 
